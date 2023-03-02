@@ -20,6 +20,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             tvResult.text = "Hasil : $selectedValue"
         }
     }
+
+    companion object {
+        private const val STATE_RESULT = "state_result"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -39,6 +43,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         tvResult = findViewById(R.id.tv_result)
         val btnMoveForResult: Button = findViewById(R.id.btn_move_for_result)
         btnMoveForResult.setOnClickListener(this)
+
+        // Cek jika savedInstanceState ada isi maka ambil valuenya
+        if (savedInstanceState != null) {
+            val result = savedInstanceState.getString(STATE_RESULT)
+            tvResult.text = result
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(STATE_RESULT, tvResult.text.toString())
     }
 
     override fun onClick(v: View?) {
